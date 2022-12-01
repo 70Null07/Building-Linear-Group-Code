@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <vector>
 #include <map>
+#include <locale>
+#include <Windows.h>
 
 #define informationPartLength 5
 using namespace std;
@@ -11,7 +13,9 @@ using namespace std;
 string FuncTo2(int number)
 {
     if (number == 1)
+    {
         return "1";
+    }
     else if (number == 0)
         return "0";
     else
@@ -20,6 +24,9 @@ string FuncTo2(int number)
 
 int main()
 {
+    setlocale(LC_ALL, "RUS");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
 
     // Создание порождающей матрицы
     vector<vector<int>> G = { {1,0,0,0,0,1,1,1,1}, {0,1,0,0,0,1,1,1,0}, {0,0,1,0,0,1,1,0,1}, {0,0,0,1,0,1,0,1,1}, {0,0,0,0,1,0,1,1,1} }, GOverall;
@@ -30,7 +37,9 @@ int main()
     {
         cout << "||";
         for (auto it : it)
+        {
             cout << it << " ";
+        }
         cout << "||" << endl;
     }
 
@@ -79,18 +88,23 @@ int main()
                 }
             }
             if (matchingRatio == informationPartLength)
+            {
                 successfulSearch = true;
+            }
         }
 
         if (!successfulSearch)
-            GOverall.push_back({ it.second.at(0),it.second.at(1),it.second.at(2),it.second.at(3),it.second.at(4),
-                searchResultP.at(0) % 2, searchResultP.at(1) % 2, searchResultP.at(2) % 2, searchResultP.at(3) % 2, });
+        {
+            GOverall.push_back({ it.second.at(0),it.second.at(1),it.second.at(2),it.second.at(3),it.second.at(4), searchResultP.at(0) % 2, searchResultP.at(1) % 2, searchResultP.at(2) % 2, searchResultP.at(3) % 2, });
+        }
         searchResultP.clear();
     }
 
 
     for (auto it : G)
+    {
         GOverall.push_back(it);
+    }
 
     for (auto it : GOverall)
     {
@@ -135,16 +149,22 @@ int main()
 
     cout << "Закодированная строка: " << endl;
     for (auto it : EncodedStr)
+    {
         for (auto it : it)
+        {
             cout << it;
-
+        }
+    }
     cout << endl;
 
     cout << "Полученная строка: " << endl;
     for (auto it : EncodedStr)
+    {
         for (auto it : it)
+        {
             cout << it;
-
+        }
+    }
     cout << endl;
 
     vector<vector<int>> controlMatrix = { {1,1,1,1},{1,1,1,0},{1,1,0,1},{1,0,1,1},{0,1,1,1},{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1} };
@@ -162,6 +182,7 @@ int main()
         
         if (S1 + S2 + S3 + S4 != 0)
         {
+            /*cout << "Произошла одиночная ошибка "*/
             vector<int> S = { S1,S2,S3,S4 };
             int digit = 0;
             for (auto it1 : controlMatrix)
@@ -182,8 +203,14 @@ int main()
 
     cout << "Декодированная строка: " << endl;
     for (auto it : DecodedStr)
+    {
         for (auto it1 : LinearGroupCode)
+        {
             if (it == it1.second)
+            {
                 cout << it1.first;
+            }
+        }
+    }
 	return 0;
 }
